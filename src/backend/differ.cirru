@@ -18,6 +18,7 @@ exports.in.for $ \ (db)
       theCache $ or
         _cache.get (state.get :id)
         Immutable.Map
+    console.log :differ (db.toJS)
     if
       or
         isnt (theCache.get :db) db

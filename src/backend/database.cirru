@@ -6,8 +6,9 @@ var
   shortid $ require :shortid
   fs $ require :fs
   path $ require :path
-  groupController $ require :./controllers/group
   itemController $ require :./controllers/item
+  groupController $ require :./controllers/group
+  stateController $ require :./controllers/state
 
 = exports.in $ new Pipeline
 
@@ -15,6 +16,9 @@ var _database $ Immutable.fromJS schema.database
 
 = exports.out $ exports.in.reduce _database $ \ (db action)
   case action.type
+    :state/connect $ stateController.connect db action
+    :state/disconnect $ stateController.disconnect db action
+
     :group/add $ groupController.add db action
     :item/add $ itemController.add db action
 

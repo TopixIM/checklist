@@ -1,0 +1,8 @@
+
+.app-group {
+}
+
+.group-display {
+  display: flex;
+  flex-direction: row;
+}

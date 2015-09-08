@@ -13,8 +13,12 @@ var
 
 = exports.item $ Immutable.fromJS $ {}
   :id null
+  :groupId null
   :text :
   :done false
 
 = exports.store $ Immutable.fromJS $ {}
   :groups $ []
+
+= exports.state $ Immutable.fromJS $ {}
+  :name :

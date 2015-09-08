@@ -5,6 +5,9 @@ var
   schema $ require :../backend/schema
   view $ require :../frontend/view
 
+var
+  Table $ React.createFactory $ require :./table
+
 = exports.in $ new Pipeline
 
 var
@@ -27,7 +30,8 @@ var pageComponent $ React.createClass $ {}
     view.action $ {} (:type :state/check) (:data id)
 
   :render $ \ ()
-    div ({}) :app-page
+    div ({})
+      Table $ {} (:store this.state.store)
 
 var
   Page $ React.createFactory pageComponent

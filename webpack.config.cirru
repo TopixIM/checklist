@@ -19,8 +19,8 @@ var
     :extensions $ array :.js :.cirru :
 
   :module $ {}
-    :loaders $ array
-      {} (:test /\.cirru$) (:loader :cirru-script) (:ignore /node_modules)
+    :loaders $ []
+      {} (:test /\.cirru$) (:loader :react-hot!cirru-script) (:ignore /node_modules)
       {} (:test "/\.(png|jpg|gif)$") (:loader :url-loader)
       {} (:test /\.css$) $ :loader :style!css!autoprefixer
 
