@@ -5,4 +5,4 @@
       cond (is (group.get :id) (action.data.get :groupId))
         group.update :children $ \ (children)
           children.push action.data
-        group
+        , group

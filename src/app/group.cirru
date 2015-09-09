@@ -8,6 +8,7 @@ var
 
 var
   Checkbox $ React.createFactory $ require :./checkbox
+  Item $ React.createFactory $ require :./item
   div $ React.createFactory :div
   input $ React.createFactory :input
 
@@ -37,9 +38,9 @@ var
           :placeholder :Group
       div ({} (:className :group-children))
         children.map $ \ (item)
-          , :item
-      div ({} (:className :group-footer))
-        div
-          {} (:className ":button is-attract")
-            :onClick this.onItemAdd
-          , ":add item"
+          Item $ {} (:item item) (:key $ item.get :id)
+        div ({} (:className :group-footer))
+          div
+            {} (:className ":button is-attract")
+              :onClick this.onItemAdd
+            , ":add item"

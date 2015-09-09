@@ -14,7 +14,7 @@ websocket.setup $ {}
 differ.setup $ {}
   :expand expand
 
-websocket.out.for $ \ (data)
+actions.out.for $ \ (data)
   console.log (colors.red :websocket.out)
     JSON.stringify data
 

@@ -18,7 +18,7 @@ exports.in.for $ \ (action)
     :stateId action.stateId
     :data $ case action.type
       :group/add $ schema.group.set :id (shortid.generate)
-      :group/add $ ... schema.item
+      :item/add $ ... schema.item
         set :id (shortid.generate)
-        set :groupId $ action.data.groupId
+        set :groupId action.data.groupId
       else $ Immutable.fromJS action.data
