@@ -25,7 +25,10 @@ var
       :textTime $ this.props.group.get :textTime
 
   :isGroupChecked $ \ ()
-    return false
+    ... this.props.group
+      get :children
+      every $ \ (item)
+        item.get :done
 
   :onItemAdd $ \ ()
     view.action $ {}
@@ -43,6 +46,14 @@ var
         :groupId $ this.props.group.get :id
         :text event.target.value
 
+  :onToggle $ \ ()
+    var current (this.isGroupChecked)
+    view.action $ {}
+      :type :group/toggle
+      :data $ {}
+        :groupId (this.props.group.get :id)
+        :done $ not current
+
   :renderText $ \ ()
     cond (> this.state.textTime (this.props.group.get :textTime))
       , this.state.text
@@ -54,6 +65,7 @@ var
     div ({} (:className ":app-group"))
       div ({} (:className ":group-display line"))
         Checkbox $ {} (:checked $ this.isGroupChecked)
+          :onClick this.onToggle
         input $ {} (:className ":group-name")
           :value (this.renderText)
           :placeholder :Group

@@ -21,8 +21,10 @@ var _database $ Immutable.fromJS schema.database
 
     :group/add $ groupController.add db action
     :group/update $ groupController.update db action
+    :group/toggle $ groupController.toggle db action
 
     :item/add $ itemController.add db action
     :item/update $ itemController.update db action
+    :item/toggle $ itemController.toggle db action
 
     else db

@@ -34,6 +34,13 @@ var
         :itemId (this.props.item.get :id)
         :text event.target.value
 
+  :onToggle $ \ ()
+    view.action $ {}
+      :type :item/toggle
+      :data $ {}
+        :groupId $ this.props.item.get :groupId
+        :itemId $ this.props.item.get :id
+
   :renderText $ \ ()
     cond (> this.state.textTime (this.props.item.get :textTime))
       , this.state.text
@@ -42,6 +49,7 @@ var
   :render $ \ ()
     div ({} (:className ":app-item line"))
       Checkbox $ {} (:checked $ this.props.item.get :done)
+        :onClick this.onToggle
       input $ {} (:className ":item-name")
         :value $ this.props.item.get :text
         :placeholder :Item

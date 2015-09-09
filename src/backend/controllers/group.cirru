@@ -17,4 +17,13 @@
         , group
 
 = exports.toggle $ \ (db action)
-  return db
+  var
+    groupId $ action.data.get :groupId
+    groupDone $ action.data.get :done
+  db.update :groups $ \ (groups)
+    groups.map $ \ (group)
+      cond (is (group.get :id) groupId)
+        group.update :children $ \ (children)
+          children.map $ \ (item)
+            item.set :done groupDone
+        , group
