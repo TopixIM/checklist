@@ -2,6 +2,7 @@
 var
   React $ require :react
   Immutable $ require :immutable
+  classnames $ require :classnames
 
 var
   view $ require :../frontend/view
@@ -54,9 +55,13 @@ var
       this.props.item.get :text
 
   :render $ \ ()
-    div ({} (:className ":app-item line"))
-      Checkbox $ {} (:checked $ this.props.item.get :done)
-        :onClick this.onToggle
+    var
+      isDone $ this.props.item.get :done
+    var className $ classnames :app-item :line $ {}
+      :is-checked isDone
+
+    div ({} (:className className))
+      Checkbox $ {} (:checked isDone) (:onClick this.onToggle)
       input $ {} (:className ":item-name")
         :value $ this.props.item.get :text
         :placeholder :Item

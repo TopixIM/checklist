@@ -26,7 +26,7 @@ var
     div ({} (:className :app-table))
       groups.map $ \ (group)
         Group $ {} (:group group) (:key $ group.get :id)
-      div ({} (:className :line))
+      div ({} (:className ":line table-footer"))
         div
           {} (:className ":button is-attract")
             :onClick this.onGroupAdd

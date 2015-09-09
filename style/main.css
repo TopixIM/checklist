@@ -1,4 +1,24 @@
 
 @import url(checkbox.css);
+@import url(table.css);
 @import url(group.css);
 @import url(item.css);
+
+body {
+  background-image: url(../images/pattern.jpg);
+  background-attachment: fixed;
+  background-size: cover;
+}
+
+input {
+  width: 400px;
+  background-color: hsla(0,100%,100%,0.9);
+}
+
+.button.is-attract {
+  background-color: hsla(240,80%,80%,0.8);
+}
+
+.button.is-danger {
+  background-color: hsla(50,70%,70%,0.5);
+}

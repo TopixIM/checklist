@@ -1,5 +1,6 @@
 
 .app-group {
+  margin-bottom: 40px;
 }
 
 .group-display {
@@ -9,4 +10,8 @@
 
 .group-children {
   padding-left: 47px;
+}
+
+input.group-name {
+  width: 447px;
 }
