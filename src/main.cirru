@@ -11,7 +11,7 @@ require :origami-ui
 require :../style/main.css
 
 websocket.setup $ {}
-  :port 3000
+  :port 4004
   :onopen $ \ ()
     var accountInfo $ JSON.parse $ or
       localStorage.getItem :immutable-chat-account

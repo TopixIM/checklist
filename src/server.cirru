@@ -9,7 +9,7 @@ var
   colors $ require :colors
 
 websocket.setup $ {}
-  :port 3000
+  :port 4004
 
 differ.setup $ {}
   :expand expand
