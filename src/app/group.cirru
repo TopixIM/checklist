@@ -54,6 +54,12 @@ var
         :groupId (this.props.group.get :id)
         :done $ not current
 
+  :onRemove $ \ ()
+    view.action $ {}
+      :type :group/remove
+      :data $ {}
+        :groupId $ this.props.group.get :id
+
   :renderText $ \ ()
     cond (> this.state.textTime (this.props.group.get :textTime))
       , this.state.text
@@ -70,6 +76,9 @@ var
           :value (this.renderText)
           :placeholder :Group
           :onChange this.onChange
+        div
+          {} (:className ":button is-danger") (:onClick this.onRemove)
+          , :remove
       div ({} (:className :group-children))
         children.map $ \ (item)
           Item $ {} (:item item) (:key $ item.get :id)

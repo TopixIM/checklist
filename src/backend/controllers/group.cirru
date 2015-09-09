@@ -27,3 +27,10 @@
           children.map $ \ (item)
             item.set :done groupDone
         , group
+
+= exports.remove $ \ (db action)
+  var
+    groupId $ action.data.get :groupId
+  db.update :groups $ \ (groups)
+    groups.filterNot $ \ (group)
+      is (group.get :id) groupId

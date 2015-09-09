@@ -41,6 +41,13 @@ var
         :groupId $ this.props.item.get :groupId
         :itemId $ this.props.item.get :id
 
+  :onRemove $ \ ()
+    view.action $ {}
+      :type :item/remove
+      :data $ {}
+        :groupId $ this.props.item.get :groupId
+        :itemId $ this.props.item.get :id
+
   :renderText $ \ ()
     cond (> this.state.textTime (this.props.item.get :textTime))
       , this.state.text
@@ -54,4 +61,6 @@ var
         :value $ this.props.item.get :text
         :placeholder :Item
         :onChange this.onChange
-
+      div
+        {} (:className ":button is-danger") (:onClick this.onRemove)
+        , :remove

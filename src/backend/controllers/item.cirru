@@ -35,3 +35,15 @@
               item.set :done $ not $ item.get :done
               , item
         , group
+
+= exports.remove $ \ (db action)
+  var
+    groupId $ action.data.get :groupId
+    itemId $ action.data.get :itemId
+  db.update :groups $ \ (groups)
+    groups.map $ \ (group)
+      cond (is (group.get :id) groupId)
+        group.update :children $ \ (children)
+          children.filterNot $ \ (item)
+            is (item.get :id) itemId
+        , group
