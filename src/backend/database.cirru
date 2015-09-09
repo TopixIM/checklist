@@ -20,6 +20,9 @@ var _database $ Immutable.fromJS schema.database
     :state/disconnect $ stateController.disconnect db action
 
     :group/add $ groupController.add db action
+    :group/update $ groupController.update db action
+
     :item/add $ itemController.add db action
+    :item/update $ itemController.update db action
 
     else db
