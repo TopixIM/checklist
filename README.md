@@ -1,16 +1,12 @@
 
 Checklist
-----
+------
 
-Simple checklist app.
+> Collaborative checklist.
 
-Demo http://repo.cumulo.org/checklist/
+### Workflow
 
-Wallpaper http://iphonewallpapers.blogspot.com/2010/12/pattern-iphone-wallpapers-320-480.html
-
-### Development
-
-https://github.com/mvc-works/webpack-workflow
+https://github.com/Cumulo/cumulo-workflow
 
 ### License
 

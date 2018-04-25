@@ -1,9 +1,0 @@
-{
-  "name": "checklist-4001",
-  "cwd": "/home/chen/repo/Cumulo/checklist",
-  "script": "src/server.cirru",
-  "exec_interpreter": "cirru-script",
-  "env": {
-    "PORT": 4004
-  }
-}
