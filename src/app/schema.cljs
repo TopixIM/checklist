@@ -3,7 +3,7 @@
 
 (def configs {:storage-key "checklist", :port 11005})
 
-(def database {:sessions {}, :users {}, :count 0})
+(def database {:sessions {}, :users {}, :checklist {}})
 
 (def dev? (do ^boolean js/goog.DEBUG))
 
@@ -17,5 +17,7 @@
    :nickname nil,
    :router {:name :home, :data nil, :router nil},
    :notifications []})
+
+(def task {:id nil, :text "", :done? false, :details {}})
 
 (def user {:name nil, :id nil, :nickname nil, :avatar nil, :password nil})

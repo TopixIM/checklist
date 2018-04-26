@@ -11,7 +11,8 @@
             [app.comp.login :refer [comp-login]]
             [respo-message.comp.msg-list :refer [comp-msg-list]]
             [app.comp.reel :refer [comp-reel]]
-            [app.schema :refer [dev?]]))
+            [app.schema :refer [dev?]]
+            [app.comp.checklist :refer [comp-checklist]]))
 
 (defcomp
  comp-offline
@@ -49,14 +50,9 @@
       (if (:logged-in? store)
         (let [router (:router store)]
           (case (:name router)
+            :home (comp-checklist (:checklist store))
             :profile (comp-profile (:user store) (:data router))
-            (div
-             {:style {:padding 16}}
-             (button {:inner-text "Inc", :style ui/button, :on-click (action-> :inc nil)})
-             (=< 8 nil)
-             (<> (:count store))
-             (=< 8 nil)
-             (<> (pr-str router)))))
+            {}))
         (comp-login states))
       (comp-status-color (:color store))
       (when dev? (comp-inspect "Store" store {:bottom 0, :left 0, :max-width "100%"}))
