@@ -3,11 +3,13 @@
 
 (def configs {:storage-key "checklist", :port 11005})
 
-(def database {:sessions {}, :users {}, :checklist {}})
+(def database {:sessions {}, :users {}, :pages {}})
 
 (def dev? (do ^boolean js/goog.DEBUG))
 
 (def notification {:id nil, :kind nil, :text nil})
+
+(def page {:title "", :id nil, :checklist {}, :time nil})
 
 (def router {:name nil, :title nil, :data {}, :router nil})
 

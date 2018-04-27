@@ -12,6 +12,15 @@
       (into {})))
 
 (deftwig
+ twig-pages
+ (pages)
+ (->> pages
+      (map
+       (fn [[k page]]
+         [k (-> page (dissoc :checklist) (assoc :task-size (count (:checklist page))))]))
+      (into {})))
+
+(deftwig
  twig-container
  (db session records)
  (let [logged-in? (some? (:user-id session))
@@ -27,8 +36,11 @@
        :router (assoc
                 router
                 :data
-                (case (:name router) :profile (twig-members (:sessions db) (:users db)) {})),
+                (case (:name router)
+                  :home (twig-pages (:pages db))
+                  :page (get-in db [:pages (:data router)])
+                  :profile (twig-members (:sessions db) (:users db))
+                  {})),
        :count (count (:sessions db)),
-       :color (color/randomColor),
-       :checklist (:checklist db)}
+       :color (color/randomColor)}
       nil))))

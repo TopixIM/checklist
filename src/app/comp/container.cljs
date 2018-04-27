@@ -12,7 +12,8 @@
             [respo-message.comp.msg-list :refer [comp-msg-list]]
             [app.comp.reel :refer [comp-reel]]
             [app.schema :refer [dev?]]
-            [app.comp.checklist :refer [comp-checklist]]))
+            [app.comp.checklist :refer [comp-checklist]]
+            [app.comp.pages :refer [comp-pages]]))
 
 (defcomp
  comp-offline
@@ -48,9 +49,10 @@
       {:style (merge ui/global ui/fullscreen ui/column)}
       (comp-navigation (:logged-in? store) (:count store))
       (if (:logged-in? store)
-        (let [router (:router store)]
+        (let [router (:router store), data (:data router)]
           (case (:name router)
-            :home (comp-checklist (:checklist store))
+            :home (comp-pages data)
+            :page (comp-checklist data)
             :profile (comp-profile (:user store) (:data router))
             {}))
         (comp-login states))
