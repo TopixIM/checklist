@@ -3,7 +3,7 @@
   (:require [hsl.core :refer [hsl]]
             [respo-ui.core :as ui]
             [respo-ui.colors :as colors]
-            [respo.macros :refer [defcomp <> div span action-> button]]
+            [respo.macros :refer [defcomp <> div span action-> cursor-> button]]
             [respo.comp.inspect :refer [comp-inspect]]
             [respo.comp.space :refer [=<]]
             [app.comp.navigation :refer [comp-navigation]]
@@ -52,7 +52,7 @@
         (let [router (:router store), data (:data router)]
           (case (:name router)
             :home (comp-pages data)
-            :page (comp-checklist data)
+            :page (cursor-> :checklist comp-checklist states data)
             :profile (comp-profile (:user store) (:data router))
             {}))
         (comp-login states))

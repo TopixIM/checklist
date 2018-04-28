@@ -20,6 +20,6 @@
    :router {:name :home, :data nil, :router nil},
    :notifications []})
 
-(def task {:id nil, :text "", :done? false, :details {}})
+(def task {:text "", :done? false, :details {}, :folded? false, :time nil})
 
 (def user {:name nil, :id nil, :nickname nil, :avatar nil, :password nil})
