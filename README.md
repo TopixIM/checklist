@@ -2,7 +2,7 @@
 Checklist
 ------
 
-> Collaborative checklist.
+> Collaborative checklist. http://repo.topix.im/checklist/
 
 ### Workflow
 

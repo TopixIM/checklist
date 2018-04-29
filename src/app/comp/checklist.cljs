@@ -57,25 +57,27 @@
 (defcomp
  comp-checklist
  (states page)
- (div
-  {:style (merge
-           ui/flex
-           {:padding "8px 16px", :overflow :auto, :padding-top 80, :padding-bottom 240})}
-  (div
-   {:style nil}
-   (<> (:title (:data page)) {:font-weight 300, :font-size 23, :font-family ui/font-fancy})
-   (=< 8 nil)
-   (list->
-    {:style (merge ui/row {:display :inline-flex})}
-    (->> (:members page)
-         (map-val (fn [username] (<> username {:margin-right 8, :font-size 14}))))))
-  (list->
-   {}
-   (->> (:checklist (:data page))
-        (sort-by first)
-        (map (fn [[k task]] [k (cursor-> k comp-task states [k] task (:id page))]))))
-  (div
-   {}
-   (button
-    {:style style/button, :on-click (action-> :task/append {:path [], :page-id (:id page)})}
-    (<> "Add")))))
+ (let [page-data (:data page)]
+   (div
+    {:style (merge
+             ui/flex
+             {:padding "8px 16px", :overflow :auto, :padding-top 80, :padding-bottom 240})}
+    (div
+     {:style nil}
+     (<> (:title page-data) {:font-weight 300, :font-size 23, :font-family ui/font-fancy})
+     (=< 8 nil)
+     (list->
+      {:style (merge ui/row {:display :inline-flex})}
+      (->> (:members page)
+           (map-val (fn [username] (<> username {:margin-right 8, :font-size 14}))))))
+    (list->
+     {}
+     (->> (:checklist page-data)
+          (sort-by first)
+          (map (fn [[k task]] [k (cursor-> k comp-task states [k] task (:id page-data))]))))
+    (div
+     {}
+     (button
+      {:style style/button,
+       :on-click (action-> :task/append {:path [], :page-id (:id page-data)})}
+      (<> "Add"))))))
