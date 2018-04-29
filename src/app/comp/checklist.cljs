@@ -6,7 +6,8 @@
             [respo-ui.core :as ui]
             [app.schema :as schema]
             [app.style :as style]
-            [app.util.dom :refer [text-width]]))
+            [app.util.dom :refer [text-width]]
+            [hsl.core :refer [hsl]]))
 
 (defcomp
  comp-task
@@ -21,7 +22,8 @@
                 {:display :inline-block,
                  :min-width 64,
                  :width (let [width (text-width latest-text 14 ui/font-normal)]
-                   (+ 20 width))}),
+                   (+ 20 width)),
+                 :background-color (hsl 0 0 97)}),
         :value latest-text,
         :on-input (fn [e d! m!]
           (let [text (:value e), now (.now js/Date)]
@@ -31,16 +33,23 @@
              {:path tree-path, :page-id page-id, :text text, :time now}))),
         :placeholder "Task"}))
     (=< 8 nil)
+    (span
+     {:style (merge style/link {:color (hsl 0 90 60)}),
+      :on-click (fn [e d! m!]
+        (let [confirmation (js/confirm "Sure to delete?")]
+          (if confirmation (d! :task/remove-one {:page-id page-id, :path tree-path}))))}
+     (<> "Del"))
+    (=< 8 nil)
     (div
      {}
      (list->
-      {}
+      {:style {:border-left (str "1px solid " (hsl 0 0 90)), :padding-left 8}}
       (->> (:details task)
            (map
             (fn [[k sub-task]]
               [k (cursor-> k comp-task states (conj tree-path k) sub-task page-id)]))))
-     (button
-      {:style style/button,
+     (span
+      {:style style/link,
        :on-click (action-> :task/append {:page-id page-id, :path tree-path})}
       (<> "Add"))))))
 
@@ -48,7 +57,9 @@
  comp-checklist
  (states page)
  (div
-  {:style (merge ui/flex {:padding "8px 16px"})}
+  {:style (merge
+           ui/flex
+           {:padding "8px 16px", :overflow :auto, :padding-top 80, :padding-bottom 240})}
   (div
    {:style {:font-family ui/font-fancy, :font-size 24, :font-weight 300}}
    (<> (:title page)))

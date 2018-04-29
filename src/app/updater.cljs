@@ -20,5 +20,6 @@
             :page/create page/create
             :task/append task/append
             :task/update-text task/update-text
+            :task/remove-one task/remove-one
             (do (println "Unknown op:" op) identity))]
     (f db op-data sid op-id op-time)))

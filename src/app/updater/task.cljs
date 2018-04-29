@@ -16,6 +16,13 @@
        (let [new-key (key-append checklist)]
          (assoc checklist new-key (merge schema/task {:time op-time})))))))
 
+(defn remove-one [db op-data sid op-id op-time]
+  (let [page-id (:page-id op-data), data-path (:path op-data)]
+    (update-in
+     db
+     (concat [:pages page-id :checklist] (interleave (butlast data-path) (repeat :details)))
+     (fn [details] (dissoc details (last data-path))))))
+
 (defn update-text [db op-data sid op-id op-time]
   (let [tree-path (:path op-data)
         text (:text op-data)
