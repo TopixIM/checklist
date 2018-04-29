@@ -5,7 +5,8 @@
             [respo.comp.inspect :refer [comp-inspect]]
             [respo-ui.core :as ui]
             [app.schema :as schema]
-            [app.style :as style]))
+            [app.style :as style]
+            [app.util.dom :refer [text-width]]))
 
 (defcomp
  comp-task
@@ -13,14 +14,22 @@
  (let [state (or (:data states) {:text "", :time 0})]
    (div
     {:style (merge ui/row {:margin-bottom 8})}
-    (input
-     {:style ui/input,
-      :value (if (> (:time state) (:time task)) (:text state) (:text task)),
-      :on-input (fn [e d! m!]
-        (let [text (:value e), now (.now js/Date)]
-          (m! (merge state {:text text, :time now}))
-          (d! :task/update-text {:path tree-path, :page-id page-id, :text text, :time now}))),
-      :placeholder "Task"})
+    (let [latest-text (if (> (:time state) (:time task)) (:text state) (:text task))]
+      (input
+       {:style (merge
+                ui/input
+                {:display :inline-block,
+                 :min-width 64,
+                 :width (let [width (text-width latest-text 14 ui/font-normal)]
+                   (+ 20 width))}),
+        :value latest-text,
+        :on-input (fn [e d! m!]
+          (let [text (:value e), now (.now js/Date)]
+            (m! (merge state {:text text, :time now}))
+            (d!
+             :task/update-text
+             {:path tree-path, :page-id page-id, :text text, :time now}))),
+        :placeholder "Task"}))
     (=< 8 nil)
     (div
      {}
