@@ -7,7 +7,8 @@
             [app.schema :as schema]
             [app.style :as style]
             [app.util.dom :refer [text-width]]
-            [hsl.core :refer [hsl]]))
+            [hsl.core :refer [hsl]]
+            [respo.util.list :refer [map-val]]))
 
 (defcomp
  comp-task
@@ -61,11 +62,16 @@
            ui/flex
            {:padding "8px 16px", :overflow :auto, :padding-top 80, :padding-bottom 240})}
   (div
-   {:style {:font-family ui/font-fancy, :font-size 24, :font-weight 300}}
-   (<> (:title page)))
+   {:style nil}
+   (<> (:title (:data page)) {:font-weight 300, :font-size 23, :font-family ui/font-fancy})
+   (=< 8 nil)
+   (list->
+    {:style (merge ui/row {:display :inline-flex})}
+    (->> (:members page)
+         (map-val (fn [username] (<> username {:margin-right 8, :font-size 14}))))))
   (list->
    {}
-   (->> (:checklist page)
+   (->> (:checklist (:data page))
         (sort-by first)
         (map (fn [[k task]] [k (cursor-> k comp-task states [k] task (:id page))]))))
   (div

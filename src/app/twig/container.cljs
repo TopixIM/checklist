@@ -11,6 +11,15 @@
       (map (fn [[k session]] [k (get-in users [(:user-id session) :name])]))
       (into {})))
 
+(defn twig-page-members [page-id sessions users]
+  (->> sessions
+       (filter
+        (fn [[k session]]
+          (let [router (:router session)]
+            (and (= :page (:name router)) (= page-id (:data router))))))
+       (map (fn [[k session]] [k (get-in users [(:user-id session) :name])]))
+       (into {})))
+
 (deftwig
  twig-pages
  (pages)
@@ -28,7 +37,9 @@
        base-data {:logged-in? logged-in?,
                   :session session,
                   :count (:count db),
-                  :reel-length (count records)}]
+                  :reel-length (count records)}
+       sessions (:sessions db)
+       users (:users db)]
    (merge
     base-data
     (if logged-in?
@@ -38,8 +49,10 @@
                 :data
                 (case (:name router)
                   :home (twig-pages (:pages db))
-                  :page (get-in db [:pages (:data router)])
-                  :profile (twig-members (:sessions db) (:users db))
+                  :page
+                    {:data (get-in db [:pages (:data router)]),
+                     :members (twig-page-members (:data router) sessions users)}
+                  :profile (twig-members sessions users)
                   {})),
        :count (count (:sessions db)),
        :color (color/randomColor)}

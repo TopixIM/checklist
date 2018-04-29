@@ -8,7 +8,6 @@
         data-path (concat
                    [:pages page-id :checklist]
                    (interleave (:path op-data) (repeat :details)))]
-    (println "data path" data-path)
     (update-in
      db
      data-path
