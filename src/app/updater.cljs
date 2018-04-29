@@ -8,10 +8,15 @@
             [app.schema :as schema]))
 
 (defn task-append [db op-data sid op-id op-time]
-  (let [session (get-in db [:sessions sid]), router (:router session), page-id (:data router)]
+  (let [session (get-in db [:sessions sid])
+        router (:router session)
+        page-id (:data router)
+        data-path (concat
+                   [:pages page-id :checklist]
+                   (interleave op-data (repeat :details)))]
     (update-in
      db
-     [:pages page-id :checklist]
+     data-path
      (fn [checklist]
        (let [new-key (key-append checklist)]
          (assoc checklist new-key (merge schema/task {:time op-time})))))))

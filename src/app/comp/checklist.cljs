@@ -9,8 +9,18 @@
 
 (defcomp
  comp-task
- (task)
- (div {} (input {:style ui/input, :placeholder "Task"}) (div {} (<> "children"))))
+ (tree-path task)
+ (div
+  {:style (merge ui/row {:margin-bottom 8})}
+  (input {:style ui/input, :placeholder "Task"})
+  (=< 8 nil)
+  (div
+   {}
+   (list->
+    {}
+    (->> (:details task)
+         (map (fn [[k sub-task]] [k (comp-task (conj tree-path k) sub-task)]))))
+   (button {:style style/button, :on-click (action-> :task/append tree-path)} (<> "Add")))))
 
 (defcomp
  comp-checklist
@@ -22,5 +32,5 @@
    (<> (:title page)))
   (list->
    {}
-   (->> (:checklist page) (sort-by first) (map (fn [[k task]] [k (comp-task task)]))))
-  (div {} (button {:style ui/button, :on-click (action-> :task/append [])} (<> "Add")))))
+   (->> (:checklist page) (sort-by first) (map (fn [[k task]] [k (comp-task [k] task)]))))
+  (div {} (button {:style style/button, :on-click (action-> :task/append [])} (<> "Add")))))
