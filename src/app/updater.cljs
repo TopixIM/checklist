@@ -18,6 +18,8 @@
             :session/remove-notification session/remove-notification
             :router/change router/change
             :page/create page/create
+            :page/update-title page/update-title
+            :page/remove-one page/remove-one
             :task/append task/append
             :task/update-text task/update-text
             :task/remove-one task/remove-one
