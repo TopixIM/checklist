@@ -5,7 +5,8 @@
             [app.comp.container :refer [comp-container]]
             [cljs.reader :refer [read-string]]
             [app.connection :refer [send! setup-socket!]]
-            [app.schema :as schema]))
+            [app.schema :as schema]
+            [app.config :as config]))
 
 (declare dispatch!)
 
@@ -18,7 +19,7 @@
 (defonce *store (atom nil))
 
 (defn simulate-login! []
-  (let [raw (.getItem js/localStorage (:storage-key schema/configs))]
+  (let [raw (.getItem js/localStorage (:storage-key config/site))]
     (if (some? raw)
       (do (println "Found storage.") (dispatch! :user/log-in (read-string raw)))
       (do (println "Found no storage.")))))
@@ -33,7 +34,7 @@
 (defn connect! []
   (setup-socket!
    *store
-   {:url (str "ws://" (.-hostname js/location) ":" (:port schema/configs)),
+   {:url (str "ws://" (.-hostname js/location) ":" (:port config/site)),
     :on-close! (fn [event] (reset! *store nil) (.error js/console "Lost connection!")),
     :on-open! (fn [event] (simulate-login!))}))
 
@@ -50,8 +51,10 @@
   (connect!)
   (add-watch *store :changes #(render-app! render!))
   (add-watch *states :changes #(render-app! render!))
+  (.addEventListener
+   js/window
+   "visibilitychange"
+   (fn [] (when (and (nil? @*store) (= "visible" js/document.visibilityState)) (connect!))))
   (println "App started!"))
 
 (defn reload! [] (clear-cache!) (render-app! render!) (println "Code updated."))
-
-(set! js/window.onload main!)

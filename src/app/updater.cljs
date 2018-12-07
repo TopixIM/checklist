@@ -15,7 +15,7 @@
             :user/log-in user/log-in
             :user/sign-up user/sign-up
             :user/log-out user/log-out
-            :session/remove-notification session/remove-notification
+            :session/remove-message session/remove-message
             :router/change router/change
             :page/create page/create
             :page/update-title page/update-title

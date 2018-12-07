@@ -3,14 +3,14 @@
   (:require [hsl.core :refer [hsl]]
             [respo-ui.core :as ui]
             [respo-ui.colors :as colors]
-            [respo.macros :refer [defcomp <> div span action-> cursor-> button]]
+            [respo.core :refer [defcomp <> div span action-> cursor-> button]]
             [respo.comp.inspect :refer [comp-inspect]]
             [respo.comp.space :refer [=<]]
             [app.comp.navigation :refer [comp-navigation]]
             [app.comp.profile :refer [comp-profile]]
             [app.comp.login :refer [comp-login]]
-            [respo-message.comp.msg-list :refer [comp-msg-list]]
-            [app.comp.reel :refer [comp-reel]]
+            [respo-message.comp.messages :refer [comp-messages]]
+            [cumulo-reel.comp.reel :refer [comp-reel]]
             [app.schema :refer [dev?]]
             [app.comp.checklist :refer [comp-checklist]]
             [app.comp.pages :refer [comp-pages]]))
@@ -58,7 +58,10 @@
         (comp-login states))
       (comp-status-color (:color store))
       (when dev? (comp-inspect "Store" store {:bottom 0, :left 0, :max-width "100%"}))
-      (comp-msg-list (get-in store [:session :notifications]) :session/remove-notification)
+      (comp-messages
+       (get-in store [:session :messages])
+       {}
+       (fn [info d! m!] (d! :session/remove-message info)))
       (when dev? (comp-reel (:reel-length store) {}))))))
 
 (def style-body {:padding "8px 16px"})

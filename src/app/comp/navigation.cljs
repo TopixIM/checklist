@@ -4,7 +4,7 @@
             [respo-ui.core :as ui]
             [respo-ui.colors :as colors]
             [respo.comp.space :refer [=<]]
-            [respo.macros :refer [defcomp <> action-> span div]]))
+            [respo.core :refer [defcomp <> action-> span div]]))
 
 (defcomp
  comp-navigation
